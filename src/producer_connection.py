@@ -23,7 +23,7 @@ class Producer(threading.Thread):
 
     def createConnection(self):
         credentials = pika.PlainCredentials(self.rabbitmq_user, self.rabbitmq_pw)
-        self.connection = pika.BlockingConnection(pika.ConnectionParameters(self.rabbitmq_ip, self.rabbitmq_port, '/', credentials, heartbeat=5))
+        self.connection = pika.BlockingConnection(pika.ConnectionParameters(self.rabbitmq_ip, self.rabbitmq_port, '/', credentials, heartbeat=600, blocked_connection_timeout=300))
         self.channel = self.connection.channel()
 
     def publish(self, exchange, routing_key, body):
